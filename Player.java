@@ -3,6 +3,7 @@ public class Player extends Actor {
         super();
         this.currRow = 4;
         this.currCol = 4;
+        this.data = 'P';
     }
 
     public void move(char input) {
@@ -10,13 +11,13 @@ public class Player extends Actor {
         int nextCol = this.currCol;
         switch (input) {
             case 'w':
-                nextRow++;
+                nextRow--;
                 break;
             case 'a':
                 nextCol--;
                 break;
             case 's':
-                nextRow--;
+                nextRow++;
                 break;
             case 'd':
                 nextCol++;
