@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class Map {
     private char[][] grid = new char[9][9];
-    private HashMap<Character, Tuple> previousCoords = new HashMap<>();
+    private HashMap<Character, Coordinate> previousCoords = new HashMap<>();
 
     public Map() {
         for (char[] row : grid) {
@@ -13,11 +13,15 @@ public class Map {
     }
 
     public void update(int row, int col, char data) {
-        Tuple previousCoord = previousCoords.get(data);
+        Coordinate previousCoord = previousCoords.get(data);
         if (previousCoord != null) {
-            grid[previousCoord.row][previousCoord.col] = '-';
+            char oldChar = grid[previousCoord.row][previousCoord.col];
+			if (oldChar == data) {
+				// Reset spot if another Actor has not moved into it
+				grid[previousCoord.row][previousCoord.col] = '-';
+			}
         }
-        previousCoords.put(data, new Tuple(row, col));
+        previousCoords.put(data, new Coordinate(row, col));
         grid[row][col] = data;
     }
 
@@ -31,11 +35,11 @@ public class Map {
         }
     }
 
-    private class Tuple {
+    private class Coordinate {
         public int row;
         public int col;
 
-        public Tuple(int row, int col) {
+        public Coordinate(int row, int col) {
             this.row = row;
             this.col = col;
         }

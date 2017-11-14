@@ -14,21 +14,42 @@ public class Chicken extends Actor {
         }
     }
 
-    public void move(char input) {
+    public boolean move(Character input) {
         int action = rng.nextInt(4);
-        switch (action) {
-            case 0:
-                moveUp();
-                break;
-            case 1:
-                moveDown();
-                break;
-            case 2:
-                moveLeft();
-                break;
-            case 3:
-                moveRight();
-                break;
-        }
+		int nextRow = this.currRow;
+		int nextCol = this.currCol;
+		boolean isValidMove = false;
+		while (!isValidMove) {
+			switch (action) {
+				case 0:
+					// move up
+					nextRow--;
+					break;
+				case 1:
+					// move down
+					nextRow++;
+					break;
+				case 2:
+					// move left
+					nextCol--;
+					break;
+				case 3:
+					// move right
+					nextCol++;
+					break;
+			}
+			isValidMove = this.areCoordsValid(nextRow, nextCol);
+			if (isValidMove) {
+				this.currRow = nextRow;
+				this.currCol = nextCol;
+			} else {
+				// Reset to current coords if invalid
+				// then iterate till we get a valid 
+				// move
+				nextRow = this.currRow;
+				nextCol = this.currCol;
+			}
+		}
+		return true;
     }
 }

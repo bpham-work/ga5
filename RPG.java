@@ -12,19 +12,27 @@ public class RPG {
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("up: w | down: s | left: a | right : d | quit: q");
-            System.out.print("your move:");
-            char userInput = scanner.next().charAt(0);
-            if (userInput == 'q') {
-                System.out.println("Exiting...");
-                break;
-            }
-            chicken.move('a');
+            chicken.move(null);
             map.update(chicken.getRow(), chicken.getCol(), chicken.getData());
-            player.move(userInput);
-            map.update(player.getRow(), player.getCol(), player.getData());
+
+            System.out.println("up: w | down: s | left: a | right : d | quit: q");
+			boolean isUserMoveValid = false;
+			while (!isUserMoveValid) {
+				System.out.print("your move: ");
+				char userInput = scanner.next().charAt(0);
+				if (userInput == 'q') {
+					System.out.println("Exiting...");
+					System.exit(0);
+				}
+				isUserMoveValid = player.move(userInput);
+				if (isUserMoveValid) {
+					map.update(player.getRow(), player.getCol(), player.getData());
+				}
+			}
+
             map.printMap();
-            if (hasPlayerWon(player, chicken)) {
+            
+			if (hasPlayerWon(player, chicken)) {
                 System.out.println("Chicken captured!");
                 System.out.println("Game over!");
                 break;

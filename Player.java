@@ -6,7 +6,7 @@ public class Player extends Actor {
         this.data = 'P';
     }
 
-    public void move(char input) {
+    public boolean move(Character input) {
         int nextRow = this.currRow;
         int nextCol = this.currCol;
         switch (input) {
@@ -28,8 +28,10 @@ public class Player extends Actor {
         if (areCoordsValid(nextRow, nextCol)) {
             this.currRow = nextRow;
             this.currCol = nextCol;
+			return true;
         } else {
             System.out.println("You cannot move off the map!");
+			return false;
         }
     }
 }
