@@ -12,9 +12,6 @@ public class RPG {
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            chicken.move(null);
-            map.update(chicken.getRow(), chicken.getCol(), chicken.getData());
-
             System.out.println("up: w | down: s | left: a | right : d | quit: q");
 			boolean isUserMoveValid = false;
 			while (!isUserMoveValid) {
@@ -30,12 +27,23 @@ public class RPG {
 				}
 			}
 
-            map.printMap();
-            
-			if (hasPlayerWon(player, chicken)) {
+			// Check if player has moved onto chicken
+            if (hasPlayerWon(player, chicken)) {
+                map.printMap();
                 System.out.println("Chicken captured!");
                 System.out.println("Game over!");
-                break;
+                System.exit(0);
+            }
+
+            chicken.move(null);
+            map.update(chicken.getRow(), chicken.getCol(), chicken.getData());
+            map.printMap();
+
+			// Check if chicken has moved onto player
+            if (hasPlayerWon(player, chicken)) {
+                System.out.println("Chicken captured!");
+                System.out.println("Game over!");
+                System.exit(0);
             }
         }
     }

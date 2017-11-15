@@ -15,11 +15,11 @@ public class Chicken extends Actor {
     }
 
     public boolean move(Character input) {
-        int action = rng.nextInt(4);
 		int nextRow = this.currRow;
 		int nextCol = this.currCol;
 		boolean isValidMove = false;
 		while (!isValidMove) {
+            int action = rng.nextInt(4);
 			switch (action) {
 				case 0:
 					// move up
@@ -44,8 +44,7 @@ public class Chicken extends Actor {
 				this.currCol = nextCol;
 			} else {
 				// Reset to current coords if invalid
-				// then iterate till we get a valid 
-				// move
+				// then iterate till we get a valid move
 				nextRow = this.currRow;
 				nextCol = this.currCol;
 			}
